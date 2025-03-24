@@ -1,0 +1,15 @@
+node_modules
+.idea
+auth.json
+vendor
+app/etc/vendor_path.php
+.vscode
+dev/tests
+generated
+lib
+dev
+pub
+setup
+bin
+var
+phpserver
