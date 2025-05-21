@@ -15,7 +15,6 @@ use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\StateException;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\App\State as AppState;
 use Magento\Framework\App\Area;
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -33,11 +32,6 @@ use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 
 class AddNewProduct implements DataPatchInterface
 {
-    /**
-     * @var ModuleDataSetupInterface
-     */
-    protected ModuleDataSetupInterface $moduleDataSetup;
-
     /**
      * @var AppState
      */
@@ -78,10 +72,12 @@ class AddNewProduct implements DataPatchInterface
      */
     protected SourceItemsSaveInterface $sourceItemSave;
 
+    /**
+     * @var array
+     */
     protected array $sourceItems = [];
 
     /**
-     * @param ModuleDataSetupInterface $moduleDataSetup
      * @param ProductRepositoryInterface $productRepository
      * @param ProductInterfaceFactory $productFactory
      * @param Product $productModel
@@ -92,7 +88,6 @@ class AddNewProduct implements DataPatchInterface
      * @param SourceItemsSaveInterface $sourceItemSave
      */
     public function __construct(
-        ModuleDataSetupInterface $moduleDataSetup,
         ProductRepositoryInterface $productRepository,
         ProductInterfaceFactory $productFactory,
         Product $productModel,
@@ -102,7 +97,6 @@ class AddNewProduct implements DataPatchInterface
         SourceItemInterfaceFactory $sourceItemFactory,
         SourceItemsSaveInterface $sourceItemSave
     ) {
-        $this->moduleDataSetup = $moduleDataSetup;
         $this->appState = $appState;
         $this->productRepository = $productRepository;
         $this->productFactory = $productFactory;
@@ -114,7 +108,7 @@ class AddNewProduct implements DataPatchInterface
     }
 
     /**
-     * @throws \Exception
+     * @return void
      */
     public function apply(): void
     {
